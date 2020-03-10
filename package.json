@@ -1,0 +1,56 @@
+{
+  "name": "esflow",
+  "version": "0.1.31",
+  "description": "Elegant, Fast JavaScript static security analyzer for finding issues like DOM XSS.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha ./test/*.js ./test/regression/*.js",
+    "testAll": "npm test && npm run testFiringRange && npm run testUtils",
+    "testFiringRange": "node ./benchmarks/FiringRange/test.js",
+    "browserify": "browserify browser/esflow.js -o browser/esflow-browser.js",
+    "testUtils": "mocha ./lib/utils/test/*.js",
+    "preversion": "npm run testAll && npm run browserify"
+  },
+  "bin": {
+    "esflow": "./bin/esflow.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/skepticfx/esflow"
+  },
+  "keywords": [
+    "domxss",
+    "static analysis",
+    "scanner",
+    "security",
+    "esflow",
+    "analysis",
+    "dom",
+    "xss",
+    "estraverse"
+  ],
+  "author": "Ahamed Nafeez",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/skepticfx/esflow/issues"
+  },
+  "homepage": "https://github.com/skepticfx/esflow",
+  "dependencies": {
+    "escope": "^3.2.0",
+    "esprima": "^2.5.0",
+    "esrecurse": "^3.1.1",
+    "estraverse": "^4.1.0",
+    "expect": "^1.9.0",
+    "ineed": "^1.0.4",
+    "lodash": "^3.10.1",
+    "minimist": "^1.2.0",
+    "request": "^2.65.0"
+  },
+  "devDependencies": {
+    "expect.js": "^0.3.1",
+    "mocha": "^2.2.5"
+  },
+  "engines": {
+    "node": ">=4.0.0"
+  }
+}
