@@ -14,11 +14,13 @@ import {
 interface ParsedArgs {
   filePath: string | null;
   aiEnabled: boolean;
+  mcpEnabled: boolean;
   cweId: string;
 }
 
 function parseArgs(argv: string[]): ParsedArgs {
   let aiEnabled = false;
+  let mcpEnabled = false;
   let cweId = CWE_79_XSS.id;
   let filePath: string | null = null;
 
@@ -30,6 +32,11 @@ function parseArgs(argv: string[]): ParsedArgs {
 
     if (arg === '--ai') {
       aiEnabled = true;
+      continue;
+    }
+
+    if (arg === '--mcp') {
+      mcpEnabled = true;
       continue;
     }
 
@@ -51,7 +58,7 @@ function parseArgs(argv: string[]): ParsedArgs {
     }
   }
 
-  return { filePath, aiEnabled, cweId };
+  return { filePath, aiEnabled, mcpEnabled, cweId };
 }
 
 function printUsage(): void {
@@ -61,6 +68,7 @@ function printUsage(): void {
       '  esflow <file>                    Static analysis only',
       '  esflow <file> --ai               Enable LLM-enhanced analysis (requires ANTHROPIC_API_KEY)',
       '  esflow <file> --ai --cwe CWE-79  Focus on specific vulnerability type',
+      '  esflow --mcp                     Start MCP server for AI agent integration',
       '',
     ].join('\n'),
   );
@@ -147,6 +155,12 @@ function printEnhancements(result: EnhancedAnalyzeResult): void {
 
 async function main(): Promise<void> {
   const args = parseArgs(process.argv.slice(2));
+  if (args.mcpEnabled) {
+    const { startMcpServer } = await import('../mcp/server.js');
+    await startMcpServer();
+    return;
+  }
+
   if (args.filePath === null) {
     printUsage();
     process.exitCode = 1;
