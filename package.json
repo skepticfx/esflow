@@ -1,0 +1,60 @@
+{
+  "name": "esflow",
+  "version": "2.0.0-alpha.0",
+  "description": "LLM-augmented JavaScript/TypeScript taint analysis for security vulnerability detection. Combines static dataflow analysis with AI agents to find DOM XSS and injection vulnerabilities.",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "esflow": "./dist/cli/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:static": "vitest run --dir test/static",
+    "test:agents": "vitest run --dir test/agents",
+    "test:benchmark": "vitest run --dir test/benchmark",
+    "lint": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "security",
+    "sast",
+    "taint-analysis",
+    "dom-xss",
+    "xss",
+    "static-analysis",
+    "javascript",
+    "typescript",
+    "llm",
+    "ai",
+    "vulnerability-detection",
+    "esflow"
+  ],
+  "author": "Ahamed Nafeez",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/skepticfx/esflow"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "oxc-parser": "^0.72.0",
+    "@anthropic-ai/sdk": "^0.52.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.0",
+    "vitest": "^3.0.0",
+    "@types/node": "^22.0.0"
+  }
+}
